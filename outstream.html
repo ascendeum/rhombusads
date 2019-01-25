@@ -15,11 +15,16 @@
         adLabelEl = {},
         adMediaContainerEl = {},
         advertisingText = '',
-        adTag = 'https://pubads.g.doubleclick.net/gampad/ads?iu=/1033130/RollCallDemo&description_url=__page-url__&env=vp&impl=s&correlator=&tfcd=0&npa=0&gdfp_req=1&output=vast&sz=640x480&cust_params=Tags=food&unviewed_position_start=1';    
+        adTag = 'https://pubads.g.doubleclick.net/gampad/ads?iu=/1033130/RollCallDemo&description_url=__page-url__&env=vp&impl=s&correlator=&tfcd=0&npa=0&gdfp_req=1&output=vast&sz=640x480&cust_params=Tags=food&unviewed_position_start=1',
+        afterOutstreamDisplayAdPubId = 'ca-pub-2928396742559401',
+        afterOutstreamDisplayAdSlot = 'adx250',
+        afterOutstreamDisplayAdWidth = 300,
+        afterOutstreamDisplayAdHeight = 250;    
 
     function appendJWDiv(){
       adEl= document.createElement('div');
       adEl.classList.add('jw-ad');
+      adEl.align = 'center';
       thisOutstreamScript.parentElement.insertBefore(adEl,thisOutstreamScript);
 
       adLabelEl= document.createElement('div');
@@ -34,6 +39,22 @@
       var playerEl= document.createElement('div');
       playerEl.id = 'player';
       adMediaContainerEl.appendChild(playerEl);
+    }
+
+    function addAfterOutstreamAd(){
+      displayAdContainer= document.createElement('ins');
+      displayAdContainer.classList.add('adsbygoogle');
+      displayAdContainer.style = 'display:inline-block;width:'+afterOutstreamDisplayAdWidth+'px;height:'+afterOutstreamDisplayAdHeight+'px';
+      displayAdContainer.dataset.adClient = afterOutstreamDisplayAdPubId;
+      displayAdContainer.dataset.adSlot = afterOutstreamDisplayAdSlot;
+      adEl.appendChild(displayAdContainer);
+
+      var adxScript = document.createElement('script');
+      adxScript.type = 'text/javascript';   
+      adxScript.async = true;
+      adxScript.onload = function(){(adsbygoogle = window.adsbygoogle || []).push({});}; 
+      adxScript.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'; 
+      document.body.appendChild(adxScript);
     }
 
     function onLoadJWPlayerScript(){
@@ -51,9 +72,11 @@
 
       playerInstance.on('complete adComplete adError', function() {
         adEl.style.transition = 'all 0.5s ease';
-        adEl.style.maxHeight = '0px';
+        //adEl.style.maxHeight = '0px';
         playerInstance.remove();
         adMediaContainerEl.parentNode.removeChild(adMediaContainerEl);
+
+        addAfterOutstreamAd();
       });
     }
 
