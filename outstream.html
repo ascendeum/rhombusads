@@ -18,7 +18,8 @@
         adLabelEl = {},
         adMediaContainerEl = {},
         advertisingText = '',
-        adTag = 'https://pubads.g.doubleclick.net/gampad/ads?iu=/1033130/RollCallDemo&description_url=__page-url__&env=vp&impl=s&correlator=&tfcd=0&npa=0&gdfp_req=1&output=vast&sz=640x480&cust_params=Tags=food&unviewed_position_start=1',
+        adTag = 'https://pubads.g.doubleclick.net/gampad/ads?iu=/1033130/RollCallDemo&description_url=__page-url__&env=vp&impl=s&correlator=&tfcd=0&npa=0&gdfp_req=1&output=vast&sz=640x480&cust_params=Tags=food&unviewed_position_start=1',        
+        afterOutstreamEnabled = false,
         afterOutstreamDisplayAdPubId = 'ca-pub-2928396742559401',
         afterOutstreamDisplayAdSlot = 'adx250',
         afterOutstreamDisplayAdWidth = 300,
@@ -98,6 +99,7 @@
     }
 
     function addAfterOutstreamAd(){
+      if(!afterOutstreamEnabled) return;
       displayAdContainer= document.createElement('ins');
       displayAdContainer.classList.add('adsbygoogle');
       displayAdContainer.style = 'display:inline-block;width:'+afterOutstreamDisplayAdWidth+'px;height:'+afterOutstreamDisplayAdHeight+'px';
