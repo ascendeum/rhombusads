@@ -18,8 +18,8 @@
         adLabelEl = {},
         adMediaContainerEl = {},
         advertisingText = '',
-        adTag = 'https://pubads.g.doubleclick.net/gampad/ads?iu=/1033130/RollCallDemo&description_url=__page-url__&env=vp&impl=s&correlator=&tfcd=0&npa=0&gdfp_req=1&output=vast&sz=640x480&cust_params=Tags=food&unviewed_position_start=1',        
-        afterOutstreamEnabled = false,
+        adTag = 'https://vid.springserve.com/vast/352810?w=__player-width__&h=__player-height__&url=__page-url__&cb=__random-number__',        
+        afterOutstreamEnabled = true,
         afterOutstreamDisplayAdPubId = 'ca-pub-2928396742559401',
         afterOutstreamDisplayAdSlot = 'adx250',
         afterOutstreamDisplayAdWidth = 300,
@@ -156,10 +156,15 @@
           }, 100);
       });
 
-      playerInstance.on('complete adComplete adError', function() {
+      playerInstance.on('complete adComplete adError', function(e) {
         adEl.style.transition = 'all 0.5s ease';
         //adEl.style.maxHeight = '0px';
-        playerInstance.remove();
+        try{
+          playerInstance.remove();
+        } catch(e){
+          console.log('Some error occured');
+        }
+        
         adMediaContainerEl.parentNode.removeChild(adMediaContainerEl);
 
         addAfterOutstreamAd();
